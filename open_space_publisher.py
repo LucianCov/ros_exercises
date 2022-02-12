@@ -16,7 +16,7 @@ def callback(data):
     combined.distance = dist
     dist_pub = rospy.Publisher('open_space/distance', Float32, queue_size=10)
     ang_pub = rospy.Publisher('open_space/angle', Float32, queue_size=10)
-    custom_pub = rospy.Publisher('open_space', OpenSpace, queue_size=10)
+    custom_pub = rospy.Publisher(rospy.get_param("~publisher_topic",'open_space'), OpenSpace, queue_size=10)
 
     dist_pub.publish(dist)
     ang_pub.publish(ang)
@@ -26,7 +26,7 @@ def callback(data):
 def listen():
     rospy.init_node('open_space_publisher', anonymous=True)
 
-    rospy.Subscriber('fake_scan', LaserScan, callback)
+    rospy.Subscriber(rospy.get_param("~subscriber_topic",'/fake_scan'), LaserScan, callback)
 
     rospy.spin()
 
