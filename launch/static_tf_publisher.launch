@@ -1,0 +1,6 @@
+<launch>
+  <node name="static_tf_right_cam_publisher" pkg="tf" type="static_transform_publisher" args="0.05 0 0 0 0 0 base_link_gt right_cam 100" />
+  <node name="static_tf_left_cam_publisher" pkg="tf" type="static_transform_publisher" args="-0.05 0 0 0 0 0 base_link_gt left_cam 100" />
+  <param name="/use_sim_time" value="true"/>
+  <node name="base_link_tf_pub" pkg="ros_exercises" type="base_link_tf_pub.py" output="screen" />
+</launch>

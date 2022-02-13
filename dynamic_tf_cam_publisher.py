@@ -9,32 +9,6 @@ import tf2_msgs.msg
 import numpy as np
 
 
-# class CameraBroadcaster:
-
-#     def __init__(self):
-#         self.left_pub_tf = rospy.Publisher("/left_cam", tf2_msgs.msg.TFMessage, queue_size=1)
-#         self.right_pub_tf = rospy.Publisher("/right_cam", tf2_msgs.msg.TFMessage, queue_size=1)
-
-#         while not rospy.is_shutdown():
-#             # Run this loop at about 20Hz
-#             rospy.sleep(0.05)
-
-#             t = geometry_msgs.msg.TransformStamped()
-#             t.header.frame_id = "base_link_gt"
-#             t.header.stamp = rospy.Time.now()
-#             t.child_frame_id = "left_cam"
-#             t.transform.translation.x = 0.05
-#             t.transform.translation.y = 0.0
-#             t.transform.translation.z = 0.0
-
-#             t.transform.rotation.x = 0.0
-#             t.transform.rotation.y = 0.0
-#             t.transform.rotation.z = 0.0
-#             t.transform.rotation.w = 1.0
-
-#             tfm = tf2_msgs.msg.TFMessage([t])
-#             self.pub_tf.publish(tfm)
-
 def broadcaster():
     rospy.init_node('dynamic_tf_cam_publisher')
     rate = rospy.Rate(20)
@@ -42,9 +16,6 @@ def broadcaster():
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
     br = tf2_ros.TransformBroadcaster()
-
-    # left_pub_tf = rospy.Publisher("/left_cam", tf2_msgs.msg.TFMessage, queue_size=1)
-    # right_pub_tf = rospy.Publisher("/right_cam", tf2_msgs.msg.TFMessage, queue_size=1)
 
     while not rospy.is_shutdown():
         # Run this loop at about 20Hz
@@ -60,7 +31,6 @@ def broadcaster():
         base_trans_matrix[0][3] = base_trans.transform.translation.x
         base_trans_matrix[1][3] = base_trans.transform.translation.y
         base_trans_matrix[2][3] = base_trans.transform.translation.z
-
 
 
         left_t = TransformStamped()
@@ -114,14 +84,8 @@ def broadcaster():
         right_final.transform.rotation.z = right_final_rotation[2]
         right_final.transform.rotation.w = right_final_rotation[3]
         
-
         br.sendTransform(left_final)
         br.sendTransform(right_final)
-
-        # tfml = tf2_msgs.msg.TFMessage([left_t])
-        # tfmr = tf2_msgs.msg.TFMessage([right_t])
-        # left_pub_tf.publish(tfml)
-        # right_pub_tf.publish(tfmr)
 
         rate.sleep()
 
