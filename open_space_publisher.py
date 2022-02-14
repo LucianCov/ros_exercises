@@ -14,9 +14,9 @@ def callback(data):
     combined = OpenSpace()
     combined.angle = ang
     combined.distance = dist
-    dist_pub = rospy.Publisher('open_space/distance', Float32, queue_size=10)
-    ang_pub = rospy.Publisher('open_space/angle', Float32, queue_size=10)
-    custom_pub = rospy.Publisher(rospy.get_param("~publisher_topic",'open_space'), OpenSpace, queue_size=10)
+    dist_pub = rospy.Publisher('/open_space/distance', Float32, queue_size=10)
+    ang_pub = rospy.Publisher('/open_space/angle', Float32, queue_size=10)
+    custom_pub = rospy.Publisher(rospy.get_param("~publisher_topic",'/open_space'), OpenSpace, queue_size=10)
 
     dist_pub.publish(dist)
     ang_pub.publish(ang)
